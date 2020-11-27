@@ -1,0 +1,17 @@
+version: "2"
+services:
+  web:
+    build: ./packages/api
+    environment: 
+      - AUTH_KEY=ABCDE
+    ports:
+      - "3000:3000"
+    links:
+      - urldb
+    volumes:
+      - ./packages/api/node_modules:/app/node_modules:delegated
+      - ./packages/api/src:/app/src:delegated
+  urldb:
+    image: mongo
+    ports:
+      - "27017:27017"
