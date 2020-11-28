@@ -1,9 +1,8 @@
 import { IDatabase } from "../db/db-interface";
 import { customAlphabet } from "nanoid";
 import { nolookalikes } from "nanoid-dictionary";
-import e from "express";
 
-export class AnAbstraction {
+export class Shortener {
   private db: IDatabase;
   private nanoid = customAlphabet(nolookalikes, 8);
   constructor(db: IDatabase) {

@@ -1,16 +1,15 @@
 import { Router, Request, Response } from "express";
-import { AnAbstraction } from "../abstraction";
+import { Shortener } from "../shortener";
 export class URLShorternerController {
-  public path = "/urls";
   public router = Router();
-  private abstraction: AnAbstraction;
+  private abstraction: Shortener;
 
-  constructor(abstraction: AnAbstraction) {
+  constructor(abstraction: Shortener) {
     this.abstraction = abstraction;
-    this.router.get(this.path, this.getUrls);
-    this.router.post(`${this.path}/create-url`, this.createUrl);
-    this.router.patch(`${this.path}/update-url`, this.updateUrl);
-    this.router.delete(`${this.path}/delete-url/:urlId`, this.deleteUrl);
+    this.router.get("/urls", this.getUrls);
+    this.router.post(`/create-url`, this.createUrl);
+    this.router.patch(`/update-url`, this.updateUrl);
+    this.router.delete(`/delete-url/:urlId`, this.deleteUrl);
   }
 
   private createUrl = async (request: Request, response: Response) => {
