@@ -1,25 +1,22 @@
-import { response } from "express";
 import { Db } from "mongodb";
-import { config } from "../config";
 import { IDatabase } from "./db-interface";
 
 export class Mongo implements IDatabase {
   db: Db;
-  constructor(db: Db) {
+  collection: string;
+  constructor(db: Db, collection: string) {
     this.db = db;
+    this.collection = collection;
   }
 
   public async getAll() {
-    const results = await this.db
-      .collection(config.db.collection)
-      .find()
-      .toArray();
+    const results = await this.db.collection(this.collection).find().toArray();
     return results;
   }
 
   public async delete(id: string) {
-      await this.db.collection(config.db.collection).deleteOne({_id: id});
-      return;
+    await this.db.collection(this.collection).deleteOne({ _id: id });
+    return;
   }
 
   public async insert(id: string, body: {}) {
@@ -28,7 +25,7 @@ export class Mongo implements IDatabase {
       ...body,
     };
     const result = await this.db
-      .collection(config.db.collection)
+      .collection(this.collection)
       .insertOne(document);
 
     return result;
@@ -36,10 +33,10 @@ export class Mongo implements IDatabase {
 
   public async update(id: string, newUrl: string) {
     const update = await this.db
-      .collection(config.db.collection)
-      .findOneAndUpdate({ _id: id }, { $set: { originalUrl: newUrl } })
+      .collection(this.collection)
+      .findOneAndUpdate({ _id: id }, { $set: { fullUrl: newUrl } });
 
-    const updatedValue: { originalUrl: string; _id: string } = update.value 
+    const updatedValue: { fullUrl: string; _id: string } = update.value;
     return updatedValue;
   }
 }

@@ -5,5 +5,5 @@ export interface IDatabase {
   update(
     id: string,
     fullUrl: string
-  ): Promise<{ originalUrl: string; _id: string }>;
+  ): Promise<{ fullUrl: string; _id: string }>;
 }
