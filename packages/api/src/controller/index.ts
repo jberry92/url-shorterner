@@ -1,12 +1,12 @@
 import { Router, Request, Response } from "express";
 import { validateBody } from "../middleware/validateBody";
-import { Shortener } from "../shortener";
-export class URLShorternerController {
+import { UrlShortener } from "../shortener";
+export class URLShortenerController {
   public router = Router();
-  private abstraction: Shortener;
+  private urlShortener: UrlShortener;
 
-  constructor(abstraction: Shortener) {
-    this.abstraction = abstraction;
+  constructor(urlShortener: UrlShortener) {
+    this.urlShortener = urlShortener;
     this.router.get("/urls", this.getUrls);
     this.router.post(`/create-url`, validateBody, this.createUrl);
     this.router.patch(`/update-url`, validateBody, this.updateUrl);
@@ -14,26 +14,41 @@ export class URLShorternerController {
   }
 
   private createUrl = async (request: Request, response: Response) => {
-    const { fullUrl } = request.body;
-    const res = await this.abstraction.createShortenedUrl(fullUrl);
-    response.send(res);
+    try {
+      const { fullUrl } = request.body;
+      const res = await this.urlShortener.createShortenedUrl(fullUrl);
+      response.send(res);
+    } catch (err) {
+      console.log(err);
+      response.sendStatus(500);
+    }
   };
 
   private getUrls = async (request: Request, response: Response) => {
-    const urls = await this.abstraction.retrieveUrls();
-    response.send(urls);
+    try {
+      const urls = await this.urlShortener.retrieveUrls();
+      response.send(urls);
+    } catch (err) {
+      console.log(err);
+      response.sendStatus(500);
+    }
   };
 
   private updateUrl = async (request: Request, response: Response) => {
-    const { urlId, newUrl } = request.body;
-    const res = await this.abstraction.updateUrl(urlId, newUrl);
-    response.send(res);
+    try {
+      const { urlId, newUrl } = request.body;
+      const res = await this.urlShortener.updateUrl(urlId, newUrl);
+      response.send(res);
+    } catch (err) {
+      console.log(err);
+      response.sendStatus(500);
+    }
   };
 
   private deleteUrl = async (request: Request, response: Response) => {
     const { urlId } = request.params;
     try {
-      await this.abstraction.deleteUrl(urlId);
+      await this.urlShortener.deleteUrl(urlId);
       response.sendStatus(204);
     } catch (err) {
       console.log(err);

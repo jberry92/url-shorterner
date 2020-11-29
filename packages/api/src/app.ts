@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { config } from "./config";
-import { URLShorternerController } from "./controller";
+import { URLShortenerController } from "./controller";
 import { Mongo } from "./db/mongo";
 import { MongoClient } from "mongodb";
-import { Shortener } from "./shortener";
+import { UrlShortener } from "./shortener";
 
 const createController = async () => {
   const dbConfig = config[process.env.ENVIRONMENT ?? 'dev'].db; 
@@ -13,8 +13,8 @@ const createController = async () => {
     useUnifiedTopology: true,
   });
   const mongo = new Mongo(client.db(dbConfig.name), dbConfig.collection);
-  const shortener = new Shortener(mongo);
-  return new URLShorternerController(shortener);
+  const shortener = new UrlShortener(mongo);
+  return new URLShortenerController(shortener);
 };
 
 export const createApp = async () => {

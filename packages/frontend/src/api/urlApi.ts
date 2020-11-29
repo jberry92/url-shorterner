@@ -1,26 +1,24 @@
 import { IApiResponse } from "@/types";
-import Axios from "axios";
+import axios from "axios";
 
 export class UrlAPI {
-  private static urlAxios = Axios.create({
-    baseURL: "http://localhost:3000/api/v1",
-  });
+  private static baseURL = "http://localhost:3000/api/v1";
 
-  static async getAllUrls(): Promise<any[]> {
-    const url = "/urls";
-    const response = await this.urlAxios.get<IApiResponse[]>(url);
+  static async getAllUrls() {
+    const url = `${this.baseURL}/urls`;
+    const response = await axios.get<IApiResponse[]>(url);
     return response.data;
   }
 
   static async createShortenedURL(fullUrl: string) {
-    const url = "/create-url";
-    const response = await this.urlAxios.post<IApiResponse>(url, { fullUrl });
+    const url = `${this.baseURL}/create-url`;
+    const response = await axios.post<IApiResponse>(url, { fullUrl });
     return response.data;
   }
 
   static async deleteURL(urlId: string) {
-    const url = `/delete-url/${urlId}`;
-    await this.urlAxios.delete(url);
+    const url = `${this.baseURL}/delete-url/${urlId}`;
+    await axios.delete(url);
     return;
   }
 }

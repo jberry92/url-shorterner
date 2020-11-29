@@ -50,6 +50,15 @@ describe("service", () => {
         { id: "123456", fullUrl: "foo", shortUrl: "https://pbid.io/123456" },
       ]);
     });
+
+    it("should return 500 if an error is thrown from mongo", async () => {
+      mockMongoMethods.find.mockImplementationOnce(() => ({
+        toArray: () => new Error("An error"),
+      }));
+
+      const res = await request(app).get("/api/v1/urls");
+      expect(res.status).toBe(500);
+    });
   });
 
   describe("post", () => {
@@ -74,6 +83,16 @@ describe("service", () => {
         .send({ fullUrl: "google" });
 
       expect(res.status).toBe(400);
+    });
+
+    it("should return 500 if an error is thrown from mongo", async () => {
+      mockMongoMethods.insertOne.mockRejectedValueOnce(new Error("An Error"));
+
+      const res = await request(app)
+        .post("/api/v1/create-url")
+        .send({ fullUrl: "https://www.google.co.uk" });
+
+      expect(res.status).toBe(500);
     });
   });
 
@@ -102,6 +121,18 @@ describe("service", () => {
         .send({ invalid: "very invalid" });
 
       expect(res.status).toBe(400);
+    });
+
+    it("should return 500 if an error is thrown from mongo", async () => {
+      const requestBody = { urlId: "12345", newUrl: "https://www.test.com" };
+      mockMongoMethods.findOneAndUpdate.mockRejectedValueOnce(new Error('An error'))
+
+      const res = await request(app)
+        .patch("/api/v1/update-url")
+        .send(requestBody);
+
+      expect(res.status).toBe(500);
+
     });
   });
 

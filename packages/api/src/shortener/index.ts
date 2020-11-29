@@ -2,7 +2,7 @@ import { IDatabase } from "../db/db-interface";
 import { customAlphabet } from "nanoid";
 import { nolookalikes } from "nanoid-dictionary";
 
-export class Shortener {
+export class UrlShortener {
   private db: IDatabase;
   private nanoid = customAlphabet(nolookalikes, 8);
   constructor(db: IDatabase) {
@@ -22,7 +22,6 @@ export class Shortener {
   public async createShortenedUrl(fullUrl: string) {
     const urlId = this.createUrlId();
     await this.db.insert(urlId, { fullUrl });
-    const builtObject = this.buildObject({ _id: urlId, fullUrl });
     return this.buildObject({ _id: urlId, fullUrl });
   }
 

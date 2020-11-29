@@ -2,6 +2,8 @@
   <div id="app">
     <AddLink @new-url-added="addUrl" />
     <div id="parent-link-container">
+      <div v-if="!Boolean(urls.length)">No URLS to display.</div>
+      <div v-if="apiError">{{ apiError }}</div>
       <div v-for="url in urls" :key="url.id">
         <Link @url-deleted="deleteUrl" :link="url" />
       </div>
@@ -22,12 +24,17 @@ export default Vue.extend({
   data() {
     return {
       urls: [] as any[],
-      isModalVisible: false,
+      apiError: "",
     };
   },
   async mounted() {
-    const results = await UrlAPI.getAllUrls();
-    this.urls = results;
+    try {
+      const results = await UrlAPI.getAllUrls();
+      this.urls = results;
+    } catch (err) {
+      console.log(err);
+      this.apiError = `API Failed to fetch. Refresh to try again.`;
+    }
   },
   methods: {
     addUrl(newUrlObject: IApiResponse) {

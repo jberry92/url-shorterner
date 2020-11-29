@@ -11,6 +11,7 @@
       <a id="link" :href="link.shortUrl">{{ link.shortUrl }}</a>
     </div>
     <h5 id="delete-button" v-on:click="() => onClick(link.id)">Delete</h5>
+    <p>{{ deleteError }}</p>
   </div>
 </template>
 
@@ -18,6 +19,7 @@
 import Vue from "vue";
 import { UrlAPI } from "../api/urlApi";
 import { IApiResponse } from "../types/index";
+
 export default Vue.extend({
   props: {
     link: {
@@ -27,10 +29,20 @@ export default Vue.extend({
       },
     },
   },
+  data() {
+    return {
+      deleteError: "",
+    };
+  },
   methods: {
-    onClick(linkId: string) {
-      UrlAPI.deleteURL(linkId);
-      this.$emit("url-deleted", linkId);
+    async onClick(linkId: string) {
+      try {
+        await UrlAPI.deleteURL(linkId);
+        this.$emit("url-deleted", linkId);
+      } catch (err) {
+        console.log(err);
+        this.$data.deleteError = "Failed to delete.";
+      }
     },
   },
 });

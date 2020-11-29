@@ -1,14 +1,17 @@
 <template>
-  <div id="add-link-container">
-    <Input
-      id="url-input"
-      @input-changed="inputChanged"
-      @input-submitted="inputSubmitted"
-      placeholder="Enter a url to shortern"
-      :urlToShorten="urlToShorten"
-    />
+  <div>
+    <div id="add-link-container">
+      <Input
+        id="url-input"
+        @input-changed="inputChanged"
+        @input-submitted="inputSubmitted"
+        placeholder="Enter a url to shorten"
+        :urlToShorten="urlToShorten"
+      />
 
-    <p>Press Enter to submit</p>
+      <p>Press Enter to submit</p>
+    </div>
+    <div>{{ error }}</div>
   </div>
 </template>
 
@@ -16,19 +19,27 @@
 import Vue from "vue";
 import { UrlAPI } from "../api/urlApi";
 import Input from "./Input.vue";
+
 export default Vue.extend({
   name: "AddLink",
   components: { Input },
   data() {
     return {
       urlToShorten: "",
+      error: "",
     };
   },
   methods: {
     async inputSubmitted() {
-      const newUrl = await UrlAPI.createShortenedURL(this.urlToShorten);
-      this.$emit("new-url-added", newUrl);
-      this.urlToShorten = "";
+      try {
+        const newUrl = await UrlAPI.createShortenedURL(this.urlToShorten);
+        this.$emit("new-url-added", newUrl);
+        this.urlToShorten = "";
+        this.error = "";
+      } catch (err) {
+        console.log(err);
+        this.error = "Failed to create URL.";
+      }
     },
     inputChanged(url: string) {
       this.urlToShorten = url;
