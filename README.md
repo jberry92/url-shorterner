@@ -5,10 +5,12 @@ API and Frontend to shorten URLS and display them
 To run the backend of the project run docker-compose up to start the database and node server. This runs on localhost:3000. The database is initially empty so either using the frontend or an api call URLs will need to be added. This can be achieved using the post endpoint listend below and must be a valid URI (e.g https://www.google.co.uk).
 
 The urls available are:  
-* POST - /v1/api/create-url method body: { fullUrl: string } (must pass uri validation check)
+* POST - /v1/api/create-url 
+  - method body JSON of  `{ fullUrl: string }` 
 * DELETE - /v1/api/delete-url/:urlID
 * GET - /v1/api/urls 
-* PATCH /v1/api/update-url method body: { newUrl: string, urlId: string}
+* PATCH /v1/api/update-url 
+  - method bod of `{ newUrl: string, urlId: string}` the url must be a valid URI.
 
 To run the frontend of the project run the following commands: 
 ```
