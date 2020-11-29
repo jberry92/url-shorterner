@@ -6,11 +6,11 @@ To run the backend of the project run docker-compose up to start the database an
 
 The urls available are:  
 * POST - /v1/api/create-url 
-  - method body JSON of  `{ fullUrl: 'https://www.google.co.uk' }` 
+  - example request body  `{ fullUrl: 'https://www.google.co.uk' }` 
 * DELETE - /v1/api/delete-url/:urlID
 * GET - /v1/api/urls 
 * PATCH /v1/api/update-url 
-  - method body of `{ newUrl: 'https://www.google.co.uk', urlId: '12345678'}` the url must be a valid URI.
+  - example request body `{ newUrl: 'https://www.google.co.uk', urlId: '12345678'}` the url must be a valid URI.
 
 To run the frontend of the project run the following commands: 
 ```
