@@ -2,8 +2,6 @@ version: "2"
 services:
   web:
     build: ./packages/api
-    environment: 
-      - AUTH_KEY=ABCDE
     ports:
       - "3000:3000"
     links:
