@@ -1,7 +1,7 @@
 import request from "supertest";
 import { createApp } from "../app";
 import { MongoClient } from "mongodb";
-import { Express, response } from "express";
+import { Express } from "express";
 
 const mockMongoMethods = {
   insertOne: jest.fn(),
