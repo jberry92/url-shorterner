@@ -23,8 +23,8 @@ export default Vue.extend({
   components: { AddLink, Link },
   data() {
     return {
-      urls: [] as any[],
-      apiError: "",
+      urls: [] as IApiResponse[],
+      apiError: ""
     };
   },
   async mounted() {
@@ -41,10 +41,10 @@ export default Vue.extend({
       this.urls.push(newUrlObject);
     },
     deleteUrl(urlId: string) {
-      const newUrls = this.urls.filter((url) => url.id !== urlId);
+      const newUrls = this.urls.filter(url => url.id !== urlId);
       this.urls = newUrls;
-    },
-  },
+    }
+  }
 });
 </script>
 
