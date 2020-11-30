@@ -26,7 +26,7 @@ export default Vue.extend({
   data() {
     return {
       urlToShorten: "",
-      error: "",
+      error: ""
     };
   },
   methods: {
@@ -43,8 +43,8 @@ export default Vue.extend({
     },
     inputChanged(url: string) {
       this.urlToShorten = url;
-    },
-  },
+    }
+  }
 });
 </script>
 

@@ -26,12 +26,12 @@ export default Vue.extend({
       type: Object as () => IApiResponse,
       default() {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
-      deleteError: "",
+      deleteError: ""
     };
   },
   methods: {
@@ -43,8 +43,8 @@ export default Vue.extend({
         console.log(err);
         this.$data.deleteError = "Failed to delete.";
       }
-    },
-  },
+    }
+  }
 });
 </script>
 

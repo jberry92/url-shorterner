@@ -12,13 +12,12 @@ import Vue from "vue";
 export default Vue.extend({
   props: {
     placeholder: String,
-    urlToShorten: String,
+    urlToShorten: String
   },
-
   methods: {
     inputChanged(event: { target: HTMLInputElement }) {
       this.$emit("input-changed", event.target.value);
-    },
-  },
+    }
+  }
 });
 </script>

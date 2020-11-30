@@ -64,7 +64,7 @@ body {
 
 #parent-link-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   grid-gap: 1rem;
   grid-auto-rows: 1fr;
 }

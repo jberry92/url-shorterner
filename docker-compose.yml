@@ -6,9 +6,6 @@ services:
       - "3000:3000"
     links:
       - urldb
-    volumes:
-      - ./packages/api/node_modules:/app/node_modules:delegated
-      - ./packages/api/src:/app/src:delegated
   mongo-seed:
       environment:
         - MONGO_HOST=streamdb
