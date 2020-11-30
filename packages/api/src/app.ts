@@ -7,12 +7,12 @@ import { MongoClient } from "mongodb";
 import { UrlShortener } from "./shortener";
 
 const createController = async () => {
-  const dbConfig = config[process.env.ENVIRONMENT ?? 'dev'].db; 
-  const client = await MongoClient.connect(dbConfig.url, {
+  const { url, name, collection } = config.db;
+  const client = await MongoClient.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const mongo = new Mongo(client.db(dbConfig.name), dbConfig.collection);
+  const mongo = new Mongo(client.db(name), collection);
   const shortener = new UrlShortener(mongo);
   return new URLShortenerController(shortener);
 };

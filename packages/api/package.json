@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start:dev": "LISTENING_PORT=3000 ENVIRONMENT=dev ts-node-dev --respawn ./src/index.ts",
+    "start:dev": "LISTENING_PORT=3000 ts-node-dev --respawn ./src/index.ts",
     "test:unit": "jest"
   },
   "dependencies": {
