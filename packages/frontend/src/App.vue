@@ -44,12 +44,6 @@ export default Vue.extend({
       const newUrls = this.urls.filter((url) => url.id !== urlId);
       this.urls = newUrls;
     },
-    showModal() {
-      this.isModalVisible = true;
-    },
-    closeModal() {
-      this.isModalVisible = false;
-    },
   },
 });
 </script>

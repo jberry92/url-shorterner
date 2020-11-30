@@ -9,6 +9,17 @@ services:
     volumes:
       - ./packages/api/node_modules:/app/node_modules:delegated
       - ./packages/api/src:/app/src:delegated
+  mongo-seed:
+      environment:
+        - MONGO_HOST=streamdb
+        - MONGO_PORT=27017
+      image: mongo
+      links: 
+        - urldb 
+      volumes: 
+        - ./data:/data
+      command:
+              "mongoimport --host urldb --port 27017 --db test --mode upsert --type json --file /data/init.json --jsonArray --db urls --collection shortenedUrls"
   urldb:
     image: mongo
     ports:
